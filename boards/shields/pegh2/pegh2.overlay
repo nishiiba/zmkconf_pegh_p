@@ -1,0 +1,77 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+#include "layouts.dtsi"
+
+/ {
+	chosen {
+		zmk,physical-layout = &physical_layout0;
+zmk,battery = &non_lipo_battery;
+	};
+
+	default_transform: keymap_transform_0 {
+		compatible = "zmk,matrix-transform";
+		columns = <1>;
+		rows = <25>;
+		map = <
+			RC(0,0) RC(1,0) RC(2,0) RC(3,0) RC(4,0) RC(5,0) RC(6,0) RC(7,0) RC(8,0) RC(9,0) RC(10,0) RC(11,0)
+			RC(12,0) RC(13,0) RC(14,0) RC(15,0) RC(16,0) RC(17,0) RC(18,0) RC(19,0) RC(20,0) RC(21,0) RC(22,0) RC(23,0)
+    >;
+	};
+
+	kscan0: kscan {
+		compatible = "zmk,kscan-gpio-direct";
+        wakeup-source;
+
+		input-gpios
+			= 
+ <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio1 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 24 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 23 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio1 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio1 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio1 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 30 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 16 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 18 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+ ,<&gpio0 19 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+
+
+
+
+		;
+	};
+   left_encoder: encoder_left {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 22 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+       steps = <24>;
+        status = "okay";
+    };
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder>;
+        triggers-per-rotation = <6>;
+   };
+non_lipo_battery: non_lipo_battery {
+		compatible = "zmk,non-lipo-battery";
+        io-channels = <&adc 4>;
+   };
+};
+
+&physical_layout0 {
+	kscan = <&kscan0>;
+	transform = <&default_transform>;
+};
